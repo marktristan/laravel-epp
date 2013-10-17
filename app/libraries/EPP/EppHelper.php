@@ -45,7 +45,13 @@ class EppHelper {
     
     $result->code = $data->response->result->{'_attribute'}['code'];
     $result->msg = $data->response->result->msg;
-    $result->data = $data->response->resData->{'domain:chkData'};
+    
+    if (isset($data->response->resData))
+    {
+      $result->domain = $data->response->resData->{'domain:chkData'}->{'domain:cd'}->{'domain:name'}->_content;
+      $result->avail = $data->response->resData->{'domain:chkData'}->{'domain:cd'}->{'domain:name'}->_attribute['avail'];
+    }
+    
     return $result;
   }
   
@@ -55,19 +61,15 @@ class EppHelper {
     
     $result->code = $data->response->result->{'_attribute'}['code'];
     $result->msg = $data->response->result->msg;
-    $result->data = $data->response->resData->{'domain:infData'};
-    return $result;
-  }
-  
-  public static function response($data, $code = 1000)
-  {
-    $build = array(
-      'code' => $code,
-      'msg' => 'Success',
-      'data' => $data
-    );
     
-    return Response::json($build);
+    if (isset($data->response->resData))
+    {
+      $result->domain = $data->response->resData->{'domain:infData'}->{'domain:name'};
+      $result->roid = $data->response->resData->{'domain:infData'}->{'domain:roid'};
+      $result->raw = $data->response->resData->{'domain:infData'};
+    }
+    
+    return $result;
   }
   
   public static function invalidRequest()
