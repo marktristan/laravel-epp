@@ -28,7 +28,7 @@ class EppHelper {
     $status = $unserializer->unserialize($packet);
 		if ($unserializer->isError($status))
     {
-			return false;
+			return self::invalidRequest();
 		}
     
 		$uData = $unserializer->getUnserializedData();
