@@ -14,5 +14,15 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
+  
+  /**
+   * Handles undefined methods
+   * 
+   * @return string
+   */
+  public function missingMethod($parameters)
+  {
+    return EppHelper::undefinedMethod();
+  }
 
 }

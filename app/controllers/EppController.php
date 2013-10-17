@@ -2,7 +2,7 @@
 
 abstract class EppController extends BaseController {
   
-  private $epp;
+  protected $epp;
   
   abstract protected function processEppRequest($request);
   
@@ -32,33 +32,10 @@ abstract class EppController extends BaseController {
     return $this->processEppRequest($request);
   }
   
-  public function getDomainInfo()
-  {
-    $frame = new EppCommand('info', 'domain');
-    $frame->addObjectProperty('name', 'premierwine.com.ph');
-    $response = $this->epp->request($frame->saveXML());
-    
-    $opt = array(
-        'complexType' => 'object',
-        'contentName' => '_content',
-        'parseAttributes' => true,
-        'attributesArray' => '_attribute'
-      );
-    
-    $unserializer = new XmlUnserializer($opt);
-    
-    $status = $unserializer->unserialize($response);
-		if ($unserializer->isError($status)) {
-			return false;
-		}
-		$result = $unserializer->getUnserializedData();
-    print_r($result);
-  }
-  
   private function eppLogin()
   {
     $frame = new Login();
-    EppHelper::setParam($frame, 'clID', 'emailcom');
+    EppHelper::setParam($frame, 'clID', Input::get('registrar'));
     EppHelper::setParam($frame, 'pw', 'Qwerty123');
     EppHelper::setParam($frame, 'eppVersion', Config::get('epp.version'));
     EppHelper::setParam($frame, 'eppLang', Config::get('epp.lang'));
