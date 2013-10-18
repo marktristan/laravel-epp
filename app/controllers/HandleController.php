@@ -17,7 +17,7 @@ class HandleController extends EppController {
     $frame->addObjectProperty('name', $data->name);
     $response = $this->epp->request($frame->saveXML());
     
-    return EppHelper::unserialize($response, __FUNCTION__);
+    return Epp::unserialize($response, __FUNCTION__);
   }
   
   private function domainInfo($request)
@@ -28,7 +28,7 @@ class HandleController extends EppController {
     $frame->addObjectProperty('name', $data->name);
     $response = $this->epp->request($frame->saveXML());
     
-    return EppHelper::unserialize($response, __FUNCTION__);
+    return Epp::unserialize($response, __FUNCTION__);
   }
   
 }

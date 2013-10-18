@@ -35,13 +35,13 @@ abstract class EppController extends BaseController {
   private function eppLogin()
   {
     $frame = new Login();
-    EppHelper::setParam($frame, 'clID', Input::get('registrar'));
-    EppHelper::setParam($frame, 'pw', 'Qwerty123');
-    EppHelper::setParam($frame, 'eppVersion', Config::get('epp.version'));
-    EppHelper::setParam($frame, 'eppLang', Config::get('epp.lang'));
-    EppHelper::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);
-    EppHelper::addElement($frame, 'objURI', ObjectSpec::xmlns('contact'), $frame->svcs);
-    EppHelper::addElement($frame, 'objURI', ObjectSpec::xmlns('host'), $frame->svcs);
+    Epp::setParam($frame, 'clID', Input::get('registrar'));
+    Epp::setParam($frame, 'pw', 'Qwerty123');
+    Epp::setParam($frame, 'eppVersion', Config::get('epp.version'));
+    Epp::setParam($frame, 'eppLang', Config::get('epp.lang'));
+    Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);
+    Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('contact'), $frame->svcs);
+    Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('host'), $frame->svcs);
     return $this->epp->request($frame->saveXML());
   }
   
