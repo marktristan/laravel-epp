@@ -28,16 +28,15 @@
 			$this->body->appendChild($this->clTRID);
 		}
 
-		function addObjectProperty($name, $value=NULL) {
+		function addObjectProperty($name, $value=NULL, $parentNode=NULL) {
 			$element = $this->createObjectPropertyElement($name);
 			$this->payload->appendChild($element);
 
 			if ($value instanceof DomNode) {
 				$element->appendChild($value);
-
 			} elseif (isset($value)) {
 				$element->appendChild($this->createTextNode($value));
-
+        if (isset($parentNode)) $parentNode->appendChild($element);
 			}
 			return $element;
 		}
