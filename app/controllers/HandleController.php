@@ -13,9 +13,7 @@ class HandleController extends EppController {
   {
     $data = json_decode($request)->data;
     
-    $frame = new EppCommand('check', 'domain');
-    $frame->addObjectProperty('name', $data->name);
-    $response = $this->epp->request($frame->saveXML());
+    $response = $this->epp->request(Domain::check($data));
     
     return Epp::unserialize($response, __FUNCTION__);
   }
@@ -24,11 +22,18 @@ class HandleController extends EppController {
   {
     $data = json_decode($request)->data;
     
-    $frame = new EppCommand('info', 'domain');
-    $frame->addObjectProperty('name', $data->name);
-    $response = $this->epp->request($frame->saveXML());
+    $response = $this->epp->request(Domain::info($data));
     
     return Epp::unserialize($response, __FUNCTION__);
+  }
+  
+  private function domainCreate($request)
+  {
+    $data = json_decode($request)->data;
+    
+    //$response = $this->epp->request(Domain::create($data));
+    return Domain::create($data);
+    //return Epp::unserialize($response, __FUNCTION__);
   }
   
 }

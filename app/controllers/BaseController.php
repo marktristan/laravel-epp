@@ -22,7 +22,7 @@ class BaseController extends Controller {
    */
   public function missingMethod($parameters)
   {
-    return EppHelper::undefinedMethod();
+    return Epp::undefinedMethod();
   }
 
 }
