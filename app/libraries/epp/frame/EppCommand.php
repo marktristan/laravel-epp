@@ -24,7 +24,7 @@
 			}
 
 			$this->clTRID = $this->createElement('clTRID');
-			$this->clTRID->appendChild($this->createTextNode(''));
+			$this->clTRID->appendChild($this->createTextNode('EPP'.time())); // lets add value to this node, EPP-time()
 			$this->body->appendChild($this->clTRID);
 		}
 
