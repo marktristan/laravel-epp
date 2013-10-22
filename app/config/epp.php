@@ -7,6 +7,7 @@ return array(
   'timeout' => 10,
   'ssl' => true,
   'version' => '1.0',
-  'lang' => 'en'
+  'lang' => 'en',
+  'pw' => 'Qwerty123'
 
 );
