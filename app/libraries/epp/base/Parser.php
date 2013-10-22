@@ -71,7 +71,10 @@ class Parser {
         $result->data->contact = $contacts;
       }
       
-      $result->data->ns = $resData->{'domain:ns'}->{'domain:hostObj'};
+      if (isset($resData->{'domain:ns'}))
+      {
+        $result->data->ns = $resData->{'domain:ns'}->{'domain:hostObj'};
+      }
       
       if (isset($resData->{'domain:host'}))
       {
@@ -89,7 +92,15 @@ class Parser {
       }
       
       $result->data->exDate = $resData->{'domain:exDate'};
-      $result->data->authInfo = $resData->{'domain:authInfo'}->{'domain:pw'};
+      
+      if (isset($resData->{'domain:authInfo'}->{'domain:pw'}))
+      {
+        $result->data->authInfo = $resData->{'domain:authInfo'}->{'domain:pw'};
+      }
+      else
+      {
+        $result->data->authInfo = $resData->{'domain:authInfo'};
+      }
       
       if (isset($data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'}))
       {
