@@ -50,6 +50,7 @@ abstract class EppController extends BaseController {
     Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);
     Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('contact'), $frame->svcs);
     Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('host'), $frame->svcs);
+    
     return $this->epp->request($frame->saveXML());
   }
   
