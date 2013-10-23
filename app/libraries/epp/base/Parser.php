@@ -104,7 +104,21 @@ class Parser {
       
       if (isset($data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'}))
       {
-        $result->data->rgpStatus = $data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'}->_attribute['s'];
+        $rgpStatus = $data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'};
+        $stats = array();
+        if (is_array($rgpStatus))
+        {
+          foreach ($rgpStatus as $rgpSt)
+          {
+            $stats[] = $rgpSt->_attribute['s'];
+          }
+          
+          $result->data->rgpStatus = $stats;
+        }
+        else
+        {
+          $result->data->rgpStatus = $rgpStatus->_attribute['s'];
+        }
       }
     }
     
