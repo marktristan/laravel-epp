@@ -19,20 +19,33 @@ class Domain {
   public static function create($data)
   {
     $frame = new EppCommand('create', 'domain');
-    $frame->addObjectProperty('name', 'new-epp-domain.ph');
-    $frame->addObjectProperty('period', 1)->setAttribute('unit', 'y');
+    $frame->addObjectProperty('name', $data->name);
+    $frame->addObjectProperty('period', intval($data->period))->setAttribute('unit', 'y');
     
-    $ns = $frame->addObjectProperty('ns');
-    $frame->addObjectProperty('hostObj', 'ns1.test.ph', $ns);
-    $frame->addObjectProperty('hostObj', 'ns2.test.ph', $ns);
+    if (isset($data->ns))
+    {
+      $nsObj = $frame->addObjectProperty('ns');
+      foreach ($data->ns as $hostObj)
+      {
+        $frame->addObjectProperty('hostObj', $hostObj, $nsObj);
+      }
+    }
     
-    $frame->addObjectProperty('registrant', 'sample-registrant');
-    $frame->addObjectProperty('contact', 'sample-admin')->setAttribute('type', 'admin');
-    $frame->addObjectProperty('contact', 'sample-billing')->setAttribute('type', 'billing');
-    $frame->addObjectProperty('contact', 'sample-tech')->setAttribute('type', 'tech');
+    $frame->addObjectProperty('registrant', $data->registrant);
     
-    $authInfo = $frame->addObjectProperty('authInfo');
-    $frame->addObjectProperty('pw', 'test-authinfo', $authInfo);
+    if (isset($data->contact))
+    {
+      foreach ($data->contact as $type => $handle)
+      {
+        $frame->addObjectProperty('contact', $handle)->setAttribute('type', $type);
+      }
+    }
+    
+    if (isset($data->authInfo))
+    {
+      $authInfoObj = $frame->addObjectProperty('authInfo');
+      $frame->addObjectProperty('pw', $data->authInfo, $authInfoObj);
+    }
     
     return $frame->saveXML();
   }

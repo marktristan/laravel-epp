@@ -16,4 +16,4 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::controller('client', 'HandleController');
+Route::controller('client', 'HandlerController');

@@ -1,6 +1,6 @@
 <?php
 
-class HandleController extends EppController {
+class HandlerController extends EppController {
   
   public function processEppRequest($request)
   {
@@ -31,9 +31,9 @@ class HandleController extends EppController {
   {
     $data = json_decode($request)->data;
     
-    //$response = $this->epp->request(Domain::create($data));
-    return Domain::create($data);
-    //return Epp::unserialize($response, __FUNCTION__);
+    $response = $this->epp->request(Domain::create($data));
+    
+    return Epp::unserialize($response, __FUNCTION__);
   }
   
 }

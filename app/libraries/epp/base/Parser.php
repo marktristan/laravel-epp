@@ -132,6 +132,16 @@ class Parser {
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
     
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'domain:creData'};
+      
+      $result->data->name = $resData->{'domain:name'};
+      $result->data->crDate = $resData->{'domain:crDate'};
+      $result->data->exDate = $resData->{'domain:exDate'};
+    }
+    
     return $result;
   }
   
