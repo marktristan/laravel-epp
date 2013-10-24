@@ -47,7 +47,16 @@ class Parser {
       }
       else
       {
-        $status[$domainStatus->_attribute['s']] = $domainStatus->_content;
+        if (isset($domainStatus->_content))
+        {
+          $content = $domainStatus->_content;
+        }
+        else
+        {
+          $content = $domainStatus->_attribute['s'];
+        }
+        
+        $status[$domainStatus->_attribute['s']] = $content;
       }
       
       $result->data->status = $status;
