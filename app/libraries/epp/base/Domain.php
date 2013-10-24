@@ -5,21 +5,33 @@ class Domain {
   public static function check($data)
   {
     $frame = new EppCommand('check', 'domain');
-    $frame->addObjectProperty('name', $data->name);
+    
+    if (is_array($data->handle))
+    {
+      foreach ($data->handle as $handle)
+      {
+        $frame->addObjectProperty('name', $handle);
+      }
+    }
+    else
+    {
+      $frame->addObjectProperty('name', $data->handle);
+    }
+    
     return $frame->saveXML();
   }
   
   public static function info($data)
   {
     $frame = new EppCommand('info', 'domain');
-    $frame->addObjectProperty('name', $data->name);
+    $frame->addObjectProperty('name', $data->handle);
     return $frame->saveXML();
   }
   
   public static function create($data)
   {
     $frame = new EppCommand('create', 'domain');
-    $frame->addObjectProperty('name', $data->name);
+    $frame->addObjectProperty('name', $data->handle);
     $frame->addObjectProperty('period', intval($data->period))->setAttribute('unit', 'y');
     
     if (isset($data->ns))

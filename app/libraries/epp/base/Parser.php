@@ -14,8 +14,24 @@ class Parser {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'domain:chkData'}->{'domain:cd'};
       
-      $result->data->domain = $resData->{'domain:name'}->_content;
-      $result->data->avail = $resData->{'domain:name'}->_attribute['avail'];
+      if (is_array($resData))
+      {
+        $resTmp = array();
+        foreach ($resData as $res)
+        {
+          $resTmp[] = array(
+            'domain' => $res->{'domain:name'}->_content,
+            'avail' => $res->{'domain:name'}->_attribute['avail']
+          );
+        }
+        
+        $result->data = $resTmp;
+      }
+      else
+      {
+        $result->data->domain = $resData->{'domain:name'}->_content;
+        $result->data->avail = $resData->{'domain:name'}->_attribute['avail'];
+      }
     }
     
     return $result;
@@ -149,6 +165,41 @@ class Parser {
       $result->data->name = $resData->{'domain:name'};
       $result->data->crDate = $resData->{'domain:crDate'};
       $result->data->exDate = $resData->{'domain:exDate'};
+    }
+    
+    return $result;
+  }
+  
+  public static function contactCheck($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'contact:chkData'}->{'contact:cd'};
+      
+      if (is_array($resData))
+      {
+        $resTmp = array();
+        foreach ($resData as $res)
+        {
+          $resTmp[] = array(
+            'contact' => $res->{'contact:id'}->_content,
+            'avail' => $res->{'contact:id'}->_attribute['avail']
+          );
+        }
+        
+        $result->data = $resTmp;
+      }
+      else
+      {
+        $result->data->contact = $resData->{'contact:id'}->_content;
+        $result->data->avail = $resData->{'contact:id'}->_attribute['avail'];
+      }
     }
     
     return $result;
