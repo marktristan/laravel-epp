@@ -13,13 +13,21 @@
 
 App::before(function($request)
 {
-	//
+	// Connect to epp and login
+  Epp::connect();
+  Epp::login();
 });
 
 
 App::after(function($request, $response)
 {
 	//
+});
+
+App::finish(function($request, $response)
+{
+	// Logout when finished
+  Epp::logout();
 });
 
 /*
