@@ -26,7 +26,7 @@ abstract class EppController extends BaseController {
     $this->eppLogin();
   }
   
-  public function getEpp()
+  public function getEppTest()
   {
     $domains = array('local-address1.ph', 'heisenberg.ph', 'premierwine.com.ph', 'joren1.ph', 'cartier.com.ph');
     $picker = array_rand($domains);
