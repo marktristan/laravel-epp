@@ -9,6 +9,13 @@ class HandlerController extends EppController {
     return $this->$method($request);
   }
   
+  private function pollReq($request)
+  {
+    $response = $this->epp->request(Poll::req());
+    return $response;
+    //return Epp::unserialize($response, __FUNCTION__);
+  }
+  
   private function domainCheck($request)
   {
     $data = json_decode($request)->data;
