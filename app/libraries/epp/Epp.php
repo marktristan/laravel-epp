@@ -7,13 +7,14 @@ class Epp {
   public static function connect()
   {
     self::$epp = new EppClient();
-    $host = Config::get('epp.host');
-    $port = Config::get('epp.port');
-    $timeout = Config::get('epp.timeout');
-    $ssl = Config::get('epp.ssl');
+    $registry = Config::get('epp.registry');
+    $host = Config::get("epp.$registry.host");
+    $port = Config::get("epp.$registry.port");
+    $timeout = Config::get("epp.$registry.timeout");
+    $ssl = Config::get("epp.$registry.ssl");
     $context = null;
     
-    if ($ssl && $host == '10.1.11.111') // for fred
+    if ($registry == 'fred') // for fred
     {
       $context = stream_context_create();
       stream_context_set_option($context, 'ssl', 'local_cert', '/etc/ssl/certs/fred.pem');
@@ -38,9 +39,11 @@ class Epp {
   
   public static function login()
   {
+    $registry = Config::get('epp.registry');
+    
     $frame = new Login();
     Epp::setParam($frame, 'clID', Input::get('registrar'));
-    Epp::setParam($frame, 'pw', Config::get('epp.pw'));
+    Epp::setParam($frame, 'pw', Config::get("epp.$registry.pw"));
     Epp::setParam($frame, 'eppVersion', Config::get('epp.version'));
     Epp::setParam($frame, 'eppLang', Config::get('epp.lang'));
     Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);
