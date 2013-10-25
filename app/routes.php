@@ -16,4 +16,6 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
+Route::get('epp/benchmark', 'HandlerController@eppBenchmark');
+
 Route::controller('client', 'HandlerController');
