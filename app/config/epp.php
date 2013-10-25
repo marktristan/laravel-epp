@@ -2,7 +2,7 @@
 
 return array(
 
-  'registry' => 'cocca', // The default registry to connect to epp
+  'registry' => 'fred', // The default registry to connect to epp
 
   'cocca' => array(
     'host' => '10.1.11.160',
@@ -17,7 +17,7 @@ return array(
     'port' => 700,
     'timeout' => 10,
     'ssl' => true,
-    'pw' => 'Qwerty123'
+    'pw' => 'passwd'
   ),
   
   'version' => '1.0',

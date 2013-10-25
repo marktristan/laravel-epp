@@ -7,24 +7,24 @@
 
 		static $_spec = array(
 			'domain' => array(
-				'xmlns'		=> 'urn:ietf:params:xml:ns:domain-1.0',
+				'xmlns'		=> 'http://www.nic.cz/xml/epp/domain-1.4',
 				'id'		=> 'name',
-				'schema'	=> 'urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd',
+				'schema'	=> 'http://www.nic.cz/xml/epp/domain-1.4 domain-1.4.xsd',
 			),
 			'host' => array(
-				'xmlns'		=> 'urn:ietf:params:xml:ns:host-1.0',
+				'xmlns'		=> 'http://www.nic.cz/xml/epp/host-1.4',
 				'id'		=> 'name',
-				'schema'	=> 'urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd',
+				'schema'	=> 'http://www.nic.cz/xml/epp/host-1.4 host-1.4.xsd',
 			),
 			'contact' => array(
-				'xmlns'		=> 'urn:ietf:params:xml:ns:contact-1.0',
+				'xmlns'		=> 'http://www.nic.cz/xml/epp/contact-1.4',
 				'id'		=> 'id',
-				'schema'	=> 'urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd',
+				'schema'	=> 'http://www.nic.cz/xml/epp/contact-1.4 contact-1.4.xsd',
 			),
 			'rgp' => array(
-				'xmlns'		=> 'urn:ietf:params:xml:ns:rgp-1.0',
+				'xmlns'		=> 'http://www.nic.cz/xml/epp/rgp-1.4',
 				'id'		=> 'id',
-				'schema'	=> 'urn:ietf:params:xml:ns:rgp-1.0 rgp-1.0.xsd',
+				'schema'	=> 'http://www.nic.cz/xml/epp/rgp-1.4 rgp-1.4.xsd',
 			),
 		);
 
