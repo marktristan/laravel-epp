@@ -205,4 +205,125 @@ class Parser {
     return $result;
   }
   
+  public static function contactInfo($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'contact:infData'};
+      
+      $result->data->id = $resData->{'contact:id'};
+      $result->data->roid = $resData->{'contact:roid'};
+      
+      $contactStatus = $resData->{'contact:status'};
+      $status = array();
+      if (is_array($contactStatus))
+      {
+        foreach ($contactStatus as $st)
+        {
+          $status[$st->_attribute['s']] = $st->_content;
+        }
+      }
+      else
+      {
+        if (isset($contactStatus->_content))
+        {
+          $content = $contactStatus->_content;
+        }
+        else
+        {
+          $content = $contactStatus->_attribute['s'];
+        }
+        
+        $status[$contactStatus->_attribute['s']] = $content;
+      }
+      
+      $result->data->status = $status;
+      
+      $postalInfo = $resData->{'contact:postalInfo'};
+      $address = array();
+      if (is_array($postalInfo))
+      {
+        foreach ($postalInfo as $pi)
+        {
+          $address[$pi->_attribute['type']]['name'] = $pi->{'contact:name'};
+          $address[$pi->_attribute['type']]['org'] = $pi->{'contact:org'};
+          
+          $street = $pi->{'contact:addr'}->{'contact:street'};
+          $tmpStreet = array();
+          if (is_array($street))
+          {
+            foreach ($street as $st)
+            {
+              $tmpStreet['street'][] = $st;
+            }
+            
+            $address[$pi->_attribute['type']]['addr'] = $tmpStreet;
+          }
+          else
+          {
+            $address[$pi->_attribute['type']]['addr']['street'] = $street;
+          }
+          
+          $address[$pi->_attribute['type']]['addr']['city'] = $pi->{'contact:addr'}->{'contact:city'};
+          $address[$pi->_attribute['type']]['addr']['sp'] = $pi->{'contact:addr'}->{'contact:sp'};
+          $address[$pi->_attribute['type']]['addr']['pc'] = $pi->{'contact:addr'}->{'contact:pc'};
+          $address[$pi->_attribute['type']]['addr']['cc'] = $pi->{'contact:addr'}->{'contact:cc'};
+        }
+      }
+      else
+      {
+        $address[$postalInfo->_attribute['type']]['name'] = $postalInfo->{'contact:name'};
+        $address[$postalInfo->_attribute['type']]['org'] = $postalInfo->{'contact:org'};
+        
+        $street = $postalInfo->{'contact:addr'}->{'contact:street'};
+        $tmpStreet = array();
+        if (is_array($street))
+        {
+          foreach ($street as $st)
+          {
+            $tmpStreet['street'][] = $st;
+          }
+          
+          $address[$postalInfo->_attribute['type']]['addr'] = $tmpStreet;
+        }
+        else
+        {
+          $address[$postalInfo->_attribute['type']]['addr']['street'] = $street;
+        }
+        
+        $address[$postalInfo->_attribute['type']]['addr']['city'] = $postalInfo->{'contact:addr'}->{'contact:city'};
+        $address[$postalInfo->_attribute['type']]['addr']['sp'] = $postalInfo->{'contact:addr'}->{'contact:sp'};
+        $address[$postalInfo->_attribute['type']]['addr']['pc'] = $postalInfo->{'contact:addr'}->{'contact:pc'};
+        $address[$postalInfo->_attribute['type']]['addr']['cc'] = $postalInfo->{'contact:addr'}->{'contact:cc'};
+      }
+      
+      $result->data->postalInfo = $address;
+      $result->data->voice = $resData->{'contact:voice'};
+      
+      if (isset($resData->{'contact:fax'}))
+      {
+        $result->data->fax = $resData->{'contact:fax'};
+      }
+      
+      $result->data->email = $resData->{'contact:email'};
+      $result->data->clID = $resData->{'contact:clID'};
+      $result->data->crID = $resData->{'contact:crID'};
+      $result->data->crDate = $resData->{'contact:crDate'};
+      
+      if (isset($resData->{'contact:upID'}))
+      {
+        $result->data->upID = $resData->{'contact:upID'};
+        $result->data->upDate = $resData->{'contact:upDate'};
+      }
+    }
+    
+    return $result;
+  }
+  
 }

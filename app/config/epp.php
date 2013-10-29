@@ -5,7 +5,7 @@ return array(
   'registry' => 'cocca', // The default registry to connect to epp
 
   'cocca' => array(
-    'host' => '10.1.11.160',
+    'host' => '10.1.11.67',
     'port' => 700,
     'timeout' => 10,
     'ssl' => true,
