@@ -21,4 +21,11 @@ class Contact {
     return $frame->saveXML();
   }
   
+  public static function info($data)
+  {
+    $frame = new EppCommand('info', 'contact');
+    $frame->addObjectProperty('id', $data->handle);
+    return $frame->saveXML();
+  }
+  
 }

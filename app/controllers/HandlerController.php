@@ -52,4 +52,13 @@ class HandlerController extends EppController {
     return Epp::unserialize($response, __FUNCTION__);
   }
   
+  private function contactInfo($request)
+  {
+    $data = json_decode($request)->data;
+    
+    $response = Epp::$epp->request(Contact::info($data));
+    
+    return Epp::unserialize($response, __FUNCTION__);
+  }
+  
 }
