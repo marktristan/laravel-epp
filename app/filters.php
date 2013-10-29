@@ -24,7 +24,7 @@ App::after(function($request, $response)
 	//
 });
 
-App::finish(function($request, $response)
+App::finish(function()
 {
 	// Logout when finished
   Epp::logout();
