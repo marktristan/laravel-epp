@@ -43,6 +43,15 @@ class HandlerController extends EppController {
     return Epp::unserialize($response, __FUNCTION__);
   }
   
+  private function domainRenew($request)
+  {
+    $data = json_decode($request)->data;
+    
+    $response = Epp::$epp->request(Domain::renew($data));
+    
+    return Epp::unserialize($response, __FUNCTION__);
+  }
+  
   private function contactCheck($request)
   {
     $data = json_decode($request)->data;

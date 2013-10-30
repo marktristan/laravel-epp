@@ -170,6 +170,25 @@ class Parser {
     return $result;
   }
   
+  public static function domainRenew($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'domain:renData'};
+      
+      $result->data->name = $resData->{'domain:name'};
+      $result->data->exDate = $resData->{'domain:exDate'};
+    }
+    
+    return $result;
+  }
+  
   public static function contactCheck($data)
   {
     $result = new stdClass();
@@ -252,7 +271,11 @@ class Parser {
         foreach ($postalInfo as $pi)
         {
           $address[$pi->_attribute['type']]['name'] = $pi->{'contact:name'};
-          $address[$pi->_attribute['type']]['org'] = $pi->{'contact:org'};
+          
+          if (isset($pi->{'contact:org'}))
+          {
+            $address[$pi->_attribute['type']]['org'] = $pi->{'contact:org'};
+          }
           
           $street = $pi->{'contact:addr'}->{'contact:street'};
           $tmpStreet = array();
@@ -271,15 +294,28 @@ class Parser {
           }
           
           $address[$pi->_attribute['type']]['addr']['city'] = $pi->{'contact:addr'}->{'contact:city'};
-          $address[$pi->_attribute['type']]['addr']['sp'] = $pi->{'contact:addr'}->{'contact:sp'};
-          $address[$pi->_attribute['type']]['addr']['pc'] = $pi->{'contact:addr'}->{'contact:pc'};
+          
+          if (isset($pi->{'contact:addr'}->{'contact:sp'}))
+          {
+            $address[$pi->_attribute['type']]['addr']['sp'] = $pi->{'contact:addr'}->{'contact:sp'};
+          }
+          
+          if (isset($pi->{'contact:addr'}->{'contact:pc'}))
+          {
+            $address[$pi->_attribute['type']]['addr']['pc'] = $pi->{'contact:addr'}->{'contact:pc'};
+          }
+          
           $address[$pi->_attribute['type']]['addr']['cc'] = $pi->{'contact:addr'}->{'contact:cc'};
         }
       }
       else
       {
         $address[$postalInfo->_attribute['type']]['name'] = $postalInfo->{'contact:name'};
-        $address[$postalInfo->_attribute['type']]['org'] = $postalInfo->{'contact:org'};
+        
+        if (isset($postalInfo->{'contact:org'}))
+        {
+          $address[$postalInfo->_attribute['type']]['org'] = $postalInfo->{'contact:org'};
+        }
         
         $street = $postalInfo->{'contact:addr'}->{'contact:street'};
         $tmpStreet = array();
@@ -298,8 +334,17 @@ class Parser {
         }
         
         $address[$postalInfo->_attribute['type']]['addr']['city'] = $postalInfo->{'contact:addr'}->{'contact:city'};
-        $address[$postalInfo->_attribute['type']]['addr']['sp'] = $postalInfo->{'contact:addr'}->{'contact:sp'};
-        $address[$postalInfo->_attribute['type']]['addr']['pc'] = $postalInfo->{'contact:addr'}->{'contact:pc'};
+        
+        if (isset($postalInfo->{'contact:addr'}->{'contact:sp'}))
+        {
+          $address[$postalInfo->_attribute['type']]['addr']['sp'] = $postalInfo->{'contact:addr'}->{'contact:sp'};
+        }
+        
+        if (isset($postalInfo->{'contact:addr'}->{'contact:pc'}))
+        {
+          $address[$postalInfo->_attribute['type']]['addr']['pc'] = $postalInfo->{'contact:addr'}->{'contact:pc'};
+        }
+        
         $address[$postalInfo->_attribute['type']]['addr']['cc'] = $postalInfo->{'contact:addr'}->{'contact:cc'};
       }
       
