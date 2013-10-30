@@ -62,4 +62,13 @@ class Domain {
     return $frame->saveXML();
   }
   
+  public static function renew($data)
+  {
+    $frame = new EppCommand('renew', 'domain');
+    $frame->addObjectProperty('name', $data->handle);
+    $frame->addObjectProperty('curExpDate', $data->curExpDate);
+    $frame->addObjectProperty('period', intval($data->period))->setAttribute('unit', 'y');
+    return $frame->saveXML();
+  }
+  
 }

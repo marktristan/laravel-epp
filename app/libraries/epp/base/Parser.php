@@ -170,6 +170,25 @@ class Parser {
     return $result;
   }
   
+  public static function domainRenew($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'domain:renData'};
+      
+      $result->data->name = $resData->{'domain:name'};
+      $result->data->exDate = $resData->{'domain:exDate'};
+    }
+    
+    return $result;
+  }
+  
   public static function contactCheck($data)
   {
     $result = new stdClass();
