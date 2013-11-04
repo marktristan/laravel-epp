@@ -71,4 +71,34 @@ class Domain {
     return $frame->saveXML();
   }
   
+  public static function update($data)
+  {
+    $frame = new EppCommand('update', 'domain');
+    $frame->addObjectProperty('name', $data->handle);
+    
+    if (isset($data->add))
+    {
+      $addObj = $frame->addObjectProperty('add');
+      
+      if (isset($data->add->ns))
+      {
+        $nsObj = $frame->addObjectProperty('ns', '', $addObj);
+        foreach ($data->add->ns as $hostObj)
+        {
+          $frame->addObjectProperty('hostObj', $hostObj, $nsObj);
+        }
+      }
+      
+      if (isset($data->add->contact))
+      {
+        foreach ($data->add->contact as $type => $handle)
+        {
+          $frame->addObjectProperty('contact', $handle, $addObj)->setAttribute('type', $type);
+        }
+      }
+    }
+    
+    return $frame->saveXML();
+  }
+  
 }
