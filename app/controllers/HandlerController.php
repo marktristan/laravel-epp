@@ -12,7 +12,7 @@ class HandlerController extends EppController {
     }
     catch (\Exception $e)
     {
-      return Epp::errorHandle($e->getMessage(), 2001);
+      return Epp::errorHandler($e->getMessage(), 2001);
     }
   }
   
@@ -63,8 +63,8 @@ class HandlerController extends EppController {
   {
     $data = json_decode($request)->data;
     
-    //$response = Epp::$epp->request(Domain::update($data));
-    return Domain::update($data);
+    $response = Epp::$epp->request(Domain::update($data));
+    return $response;
     //return Epp::unserialize($response, __FUNCTION__);
   }
   
