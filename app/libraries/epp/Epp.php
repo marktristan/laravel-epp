@@ -103,4 +103,14 @@ class Epp {
     return Response::json($build, 400);
   }
   
+  public static function errorHandle($msg, $code = 1000)
+  {
+    $build = array(
+      'code' => $code,
+      'msg' => $msg
+    );
+    
+    return Response::json($build, 400);
+  }
+  
 }
