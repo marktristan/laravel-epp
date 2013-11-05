@@ -96,6 +96,14 @@ class Domain {
           $frame->addObjectProperty('contact', $handle, $addObj)->setAttribute('type', $type);
         }
       }
+      
+      if (isset($data->add->status))
+      {
+        foreach ($data->add->status as $s => $content)
+        {
+          $frame->addObjectProperty('status', $content, $addObj)->setAttribute('s', $s);
+        }
+      }
     }
     
     return $frame->saveXML();
