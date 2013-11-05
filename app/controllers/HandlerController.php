@@ -4,9 +4,16 @@ class HandlerController extends EppController {
   
   public function processEppRequest($request)
   {
-    $req = json_decode($request);
-    $method = camel_case($req->method);
-    return $this->$method($request);
+    try
+    {
+      $req = json_decode($request);
+      $method = camel_case($req->method);
+      return $this->$method($request);
+    }
+    catch (\Exception $e)
+    {
+      return Epp::errorHandle($e->getMessage(), 2001);
+    }
   }
   
   private function pollReq($request)
@@ -55,7 +62,7 @@ class HandlerController extends EppController {
   private function domainUpdate($request)
   {
     $data = json_decode($request)->data;
-    print_r($data);
+    
     //$response = Epp::$epp->request(Domain::update($data));
     return Domain::update($data);
     //return Epp::unserialize($response, __FUNCTION__);
