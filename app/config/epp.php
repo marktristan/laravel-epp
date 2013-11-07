@@ -20,6 +20,14 @@ return array(
     'pw' => 'Qwerty123'
   ),
   
+  'keysystems' => array(
+    'host' => 'wi-ote2.rrpproxy.net',
+    'port' => 700,
+    'timeout' => 10,
+    'ssl' => true,
+    'pw' => 'oc34nside'
+  ),
+  
   'version' => '1.0',
     
   'lang' => 'en'
