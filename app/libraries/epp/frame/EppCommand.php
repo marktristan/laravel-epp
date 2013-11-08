@@ -34,8 +34,8 @@
 
 			if ($value instanceof DomNode) {
 				$element->appendChild($value);
-			} elseif (isset($value)) {
-				$element->appendChild($this->createTextNode($value));
+			} else {
+        if (isset($value)) $element->appendChild($this->createTextNode($value));
         if (isset($parentNode)) $parentNode->appendChild($element);
 			}
 			return $element;
