@@ -59,7 +59,13 @@ class Epp {
     return Epp::$epp->request($frame->saveXML());
   }
   
-  public static function unserialize($packet, $method)
+  public static function result($packet, $method)
+  {
+    $result = Parser::$method(Epp::unserialize($packet));
+    return Response::json($result);
+  }
+  
+  public static function unserialize($packet)
   {
     $opt = array(
       'complexType' => 'object',
@@ -69,18 +75,10 @@ class Epp {
     );
     
     $unserializer = new XmlUnserializer($opt);
-    
     $status = $unserializer->unserialize($packet);
-		if ($unserializer->isError($status))
-    {
-			return Epp::invalidRequest();
-		}
-    
 		$uData = $unserializer->getUnserializedData();
     
-    $result = Parser::$method($uData);
-    
-    return Response::json($result);
+    return $uData;
   }
   
   public static function invalidRequest()
