@@ -76,7 +76,7 @@ class Epp {
     
     $unserializer = new XmlUnserializer($opt);
     $status = $unserializer->unserialize($packet);
-		$uData = $unserializer->getUnserializedData();
+    $uData = $unserializer->getUnserializedData();
     
     return $uData;
   }
