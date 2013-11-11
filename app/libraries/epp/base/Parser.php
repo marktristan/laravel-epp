@@ -2,6 +2,27 @@
 
 class Parser {
   
+  public static function pollReq($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->msgQ))
+    {
+      $result->data = new stdClass();
+      $msgQ = $data->response->msgQ;
+      
+      $result->data->count = $msgQ->_attribute['count'];
+      $result->data->id = $msgQ->_attribute['id'];
+      $result->data->qDate = $msgQ->qDate;
+      $result->data->msg = Epp::unserialize($msgQ->msg->_content);
+    }
+    
+    return $result;
+  }
+  
   public static function domainCheck($data)
   {
     $result = new stdClass();

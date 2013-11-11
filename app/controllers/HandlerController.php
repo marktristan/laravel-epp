@@ -19,8 +19,8 @@ class HandlerController extends EppController {
   private function pollReq($request)
   {
     $response = Epp::$epp->request(Poll::req());
-    return $response;
-    //return Epp::unserialize($response, __FUNCTION__);
+    //return $response;
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function domainCheck($request)
@@ -29,7 +29,7 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Domain::check($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function domainInfo($request)
@@ -38,7 +38,7 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Domain::info($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function domainCreate($request)
@@ -47,7 +47,7 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Domain::create($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function domainRenew($request)
@@ -56,16 +56,16 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Domain::renew($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function domainUpdate($request)
   {
     $data = json_decode($request)->data;
     
-    $response = Epp::$epp->request(Domain::update($data));
-    return $response;
-    //return Epp::unserialize($response, __FUNCTION__);
+    //$response = Epp::$epp->request(Domain::update($data));
+    return Domain::update($data);
+    //return Epp::result($response, __FUNCTION__);
   }
   
   private function contactCheck($request)
@@ -74,7 +74,7 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Contact::check($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
   private function contactInfo($request)
@@ -83,7 +83,7 @@ class HandlerController extends EppController {
     
     $response = Epp::$epp->request(Contact::info($data));
     
-    return Epp::unserialize($response, __FUNCTION__);
+    return Epp::result($response, __FUNCTION__);
   }
   
 }
