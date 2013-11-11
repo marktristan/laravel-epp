@@ -82,7 +82,7 @@ class Domain {
       
       if (isset($data->add->ns))
       {
-        $nsObj = $frame->addObjectProperty('ns', '', $addObj);
+        $nsObj = $frame->addObjectProperty('ns', NULL, $addObj);
         foreach ($data->add->ns as $hostObj)
         {
           $frame->addObjectProperty('hostObj', $hostObj, $nsObj);
@@ -102,6 +102,36 @@ class Domain {
         foreach ($data->add->status as $s => $content)
         {
           $frame->addObjectProperty('status', $content, $addObj)->setAttribute('s', $s);
+        }
+      }
+    }
+    
+    if (isset($data->rem))
+    {
+      $addObj = $frame->addObjectProperty('rem');
+      
+      if (isset($data->rem->ns))
+      {
+        $nsObj = $frame->addObjectProperty('ns', NULL, $addObj);
+        foreach ($data->rem->ns as $hostObj)
+        {
+          $frame->addObjectProperty('hostObj', $hostObj, $nsObj);
+        }
+      }
+      
+      if (isset($data->rem->contact))
+      {
+        foreach ($data->rem->contact as $type => $handle)
+        {
+          $frame->addObjectProperty('contact', $handle, $addObj)->setAttribute('type', $type);
+        }
+      }
+      
+      if (isset($data->rem->status))
+      {
+        foreach ($data->rem->status as $s)
+        {
+          $frame->addObjectProperty('status', NULL, $addObj)->setAttribute('s', $s);
         }
       }
     }
