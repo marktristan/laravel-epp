@@ -17,7 +17,15 @@ class Parser {
       $result->data->count = $msgQ->_attribute['count'];
       $result->data->id = $msgQ->_attribute['id'];
       $result->data->qDate = $msgQ->qDate;
-      $result->data->msg = Epp::unserialize($msgQ->msg->_content);
+      
+      if (strpos($msgQ->msg->_content, '<![CDATA[') == 0)
+      {
+        $result->data->msg = Epp::unserialize($msgQ->msg->_content);
+      }
+      else
+      {
+        $result->data->msg = $msgQ->msg->_content;
+      }
     }
     
     return $result;
