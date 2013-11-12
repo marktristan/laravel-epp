@@ -19,7 +19,16 @@ class HandlerController extends EppController {
   private function pollReq($request)
   {
     $response = Epp::$epp->request(Poll::req());
-    //return $response;
+    
+    return Epp::result($response, __FUNCTION__);
+  }
+  
+  private function pollAck($request)
+  {
+    $data = json_decode($request)->data;
+    
+    $response = Epp::$epp->request(Poll::ack($data));
+    
     return Epp::result($response, __FUNCTION__);
   }
   

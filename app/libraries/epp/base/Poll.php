@@ -13,7 +13,7 @@ class Poll {
   {
     $frame = new EppCommand('poll');
     $frame->command->setAttribute('op', 'ack');
-    $frame->command->setAttribute('msgID', 1);
+    $frame->command->setAttribute('msgID', $data->msgID);
     return $frame->saveXML();
   }
   
