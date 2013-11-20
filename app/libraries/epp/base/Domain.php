@@ -108,11 +108,11 @@ class Domain {
     
     if (isset($data->rem))
     {
-      $addObj = $frame->addObjectProperty('rem');
+      $remObj = $frame->addObjectProperty('rem');
       
       if (isset($data->rem->ns))
       {
-        $nsObj = $frame->addObjectProperty('ns', NULL, $addObj);
+        $nsObj = $frame->addObjectProperty('ns', NULL, $remObj);
         foreach ($data->rem->ns as $hostObj)
         {
           $frame->addObjectProperty('hostObj', $hostObj, $nsObj);
@@ -123,7 +123,7 @@ class Domain {
       {
         foreach ($data->rem->contact as $type => $handle)
         {
-          $frame->addObjectProperty('contact', $handle, $addObj)->setAttribute('type', $type);
+          $frame->addObjectProperty('contact', $handle, $remObj)->setAttribute('type', $type);
         }
       }
       
@@ -131,8 +131,20 @@ class Domain {
       {
         foreach ($data->rem->status as $s)
         {
-          $frame->addObjectProperty('status', NULL, $addObj)->setAttribute('s', $s);
+          $frame->addObjectProperty('status', NULL, $remObj)->setAttribute('s', $s);
         }
+      }
+    }
+    
+    if (isset($data->chg))
+    {
+      $chgObj = $frame->addObjectProperty('chg');
+      $frame->addObjectProperty('registrant', $data->chg->registrant, $chgObj);
+      
+      if (isset($data->chg->authInfo))
+      {
+        $authInfoObj = $frame->addObjectProperty('authInfo', NULL, $chgObj);
+        $frame->addObjectProperty('pw', $data->chg->authInfo, $authInfoObj);
       }
     }
     
