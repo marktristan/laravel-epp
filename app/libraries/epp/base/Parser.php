@@ -420,4 +420,21 @@ class Parser {
     return $result;
   }
   
+  public static function contactCreate($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    if (isset($data->response->resData))
+    {
+      $result->data = new stdClass();
+      $resData = $data->response->resData->{'contact:creData'};
+      $result->data->id = $resData->{'contact:id'};
+    }
+    
+    return $result;
+  }
+  
 }
