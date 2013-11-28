@@ -2,10 +2,18 @@
 
 return array(
 
-  'registry' => 'cocca', // The default registry to connect to epp
+  'registry' => 'coccaSandbox', // The default registry to connect to epp
 
   'cocca' => array(
     'host' => '10.1.11.67',
+    'port' => 700,
+    'timeout' => 10,
+    'ssl' => true,
+    'pw' => 'Qwerty123'
+  ),
+  
+  'coccaSandbox' => array(
+    'host' => '203.119.4.158',
     'port' => 700,
     'timeout' => 10,
     'ssl' => true,
