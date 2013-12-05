@@ -402,7 +402,7 @@ class Parser {
       
       if (isset($resData->{'contact:voice'}->_attribute['x']))
       {
-        $result->data->voiceExt = $resData->{'contact:voice'}->_attribute['x'];
+        $result->data->ext = $resData->{'contact:voice'}->_attribute['x'];
       }
       
       if (isset($resData->{'contact:fax'}))
