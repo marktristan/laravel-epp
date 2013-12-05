@@ -398,7 +398,12 @@ class Parser {
       }
       
       $result->data->postalInfo = $address;
-      $result->data->voice = $resData->{'contact:voice'};
+      $result->data->voice = $resData->{'contact:voice'}->_content;
+      
+      if (isset($resData->{'contact:voice'}->_attribute['x']))
+      {
+        $result->data->voiceExt = $resData->{'contact:voice'}->_attribute['x'];
+      }
       
       if (isset($resData->{'contact:fax'}))
       {
