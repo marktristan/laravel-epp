@@ -104,4 +104,13 @@ class HandlerController extends EppController {
     return Epp::result($response, __FUNCTION__);
   }
   
+  private function contactUpdate($request)
+  {
+    $data = json_decode($request)->data;
+    
+    $response = Epp::$epp->request(Contact::update($data));
+    
+    return Epp::result($response, __FUNCTION__);
+  }
+  
 }

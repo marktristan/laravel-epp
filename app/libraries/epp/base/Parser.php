@@ -442,4 +442,14 @@ class Parser {
     return $result;
   }
   
+  public static function contactUpdate($data)
+  {
+    $result = new stdClass();
+    
+    $result->code = $data->response->result->_attribute['code'];
+    $result->msg = $data->response->result->msg;
+    
+    return $result;
+  }
+  
 }
