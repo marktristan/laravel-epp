@@ -36,6 +36,14 @@ return array(
     'pw' => 'oc34nside'
   ),
   
+  'webnic' => array(
+    'host' => 'oteweb.webnic.cc',
+    'port' => 700,
+    'timeout' => 60,
+    'ssl' => true,
+    'pw' => 'd0tcom@'
+  ),
+  
   'version' => '1.0',
     
   'lang' => 'en'
