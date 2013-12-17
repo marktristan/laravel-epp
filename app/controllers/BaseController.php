@@ -20,7 +20,7 @@ class BaseController extends Controller {
    * 
    * @return string
    */
-  public function missingMethod($parameters)
+  public function missingMethod($method, $parameters = array())
   {
     return Epp::undefinedMethod();
   }
