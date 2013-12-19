@@ -150,5 +150,12 @@ class Domain {
     
     return $frame->saveXML();
   }
+
+  public static function delete($data)
+  {
+    $frame = new EppCommand('delete', 'domain');
+    $frame->addObjectProperty('name', $data->handle);
+    return $frame->saveXML();
+  }
   
 }
