@@ -108,7 +108,7 @@ class Epp {
       'msg' => $msg
     );
     
-    return Response::json($build, 400);
+    return Response::json($build);
   }
   
 }

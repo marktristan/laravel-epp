@@ -4,16 +4,9 @@ class HandlerController extends EppController {
   
   public function processEppRequest($request)
   {
-    try
-    {
-      $req = json_decode($request);
-      $method = camel_case($req->method);
-      return $this->$method($request);
-    }
-    catch (\Exception $e)
-    {
-      return Epp::errorHandler($e->getMessage(), 2001);
-    }
+    $req = json_decode($request);
+    $method = camel_case($req->method);
+    return $this->$method($request);
   }
   
   private function pollReq($request)
