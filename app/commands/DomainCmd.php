@@ -37,7 +37,10 @@ class DomainCmd extends Command {
 	 */
 	public function fire()
 	{
-		$output = '';
+		$this->comment("===========================");
+		$this->comment("EPP Command Line Tool");
+		$this->comment("===========================");
+
 		$registrar = $this->ask("Registrar handle: ");
 		$password = $this->secret("Registrar password: ");
 
