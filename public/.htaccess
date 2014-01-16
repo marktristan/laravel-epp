@@ -4,7 +4,6 @@
     </IfModule>
 
     RewriteEngine On
-    Options +FollowSymLinks
 
     # Redirect Trailing Slashes...
 	RewriteRule ^(.*)/$ /$1 [L,R=301]
@@ -12,7 +11,5 @@
 	# Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-l
-    #RewriteRule ^ index.php [L]
-    RewriteRule ^(.+) index.php [L]
+    RewriteRule ^ index.php [L]
 </IfModule>
