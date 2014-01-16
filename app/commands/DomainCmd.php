@@ -47,7 +47,7 @@ class DomainCmd extends Command {
 
 		$domain = $this->ask("\nDomain handle: ");
 
-		if (!empty(trim($registrar)))
+		if (trim($registrar) != '' && trim($password) != '')
 		{
 			EppCmd::connect();
 			EppCmd::login($registrar, $password);
