@@ -38,6 +38,7 @@ class DomainCmd extends Command {
 	public function fire()
 	{
 		$registrar = $this->ask("Registrar handle: ");
+		$password = $this->secret("Registrar password: ");
 
 		$this->comment("\n====== Select Method ======");
 		$this->info("check, info, create, update");
@@ -49,7 +50,7 @@ class DomainCmd extends Command {
 		if (!empty(trim($registrar)))
 		{
 			EppCmd::connect();
-			EppCmd::login($registrar);
+			EppCmd::login($registrar, $password);
 
 			$data = new stdClass();
 			$data->handle = $domain;

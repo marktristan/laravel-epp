@@ -37,13 +37,13 @@ class EppCmd {
     if (isset($parentNode)) $parentNode->appendChild($element);
   }
   
-  public static function login($registrar)
+  public static function login($registrar, $password)
   {
     $registry = Config::get('epp.registry');
     
     $frame = new Login();
     EppCmd::setParam($frame, 'clID', $registrar);
-    EppCmd::setParam($frame, 'pw', Config::get("epp.$registry.pw"));
+    EppCmd::setParam($frame, 'pw', $password);
     EppCmd::setParam($frame, 'eppVersion', Config::get('epp.version'));
     EppCmd::setParam($frame, 'eppLang', Config::get('epp.lang'));
     EppCmd::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);
