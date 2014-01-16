@@ -2,7 +2,7 @@
 
 return array(
 
-  'registry' => 'cocca', // The default registry to connect to epp
+  'registry' => 'coccaSandbox', // The default registry to connect to epp
 
   'cocca' => array(
     'host' => '10.1.11.83',
