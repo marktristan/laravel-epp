@@ -37,6 +37,7 @@ class DomainCmd extends Command {
 	 */
 	public function fire()
 	{
+		$output = '';
 		$registrar = $this->ask("Registrar handle: ");
 		$password = $this->secret("Registrar password: ");
 
