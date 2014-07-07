@@ -7,24 +7,24 @@
 
     static $_spec = array(
       'domain' => array(
-        'xmlns'   => 'urn:ietf:params:xml:ns:domain-1.0',
-        'id'    => 'name',
-        'schema'  => 'urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd',
+        'xmlns' => 'urn:ietf:params:xml:ns:domain-1.0',
+        'id' => 'name',
+        'schema' => 'urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd',
       ),
       'host' => array(
-        'xmlns'   => 'urn:ietf:params:xml:ns:host-1.0',
-        'id'    => 'name',
-        'schema'  => 'urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd',
+        'xmlns' => 'urn:ietf:params:xml:ns:host-1.0',
+        'id' => 'name',
+        'schema' => 'urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd',
       ),
       'contact' => array(
-        'xmlns'   => 'urn:ietf:params:xml:ns:contact-1.0',
-        'id'    => 'id',
-        'schema'  => 'urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd',
+        'xmlns' => 'urn:ietf:params:xml:ns:contact-1.0',
+        'id' => 'id',
+        'schema' => 'urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd',
       ),
       'rgp' => array(
-        'xmlns'   => 'urn:ietf:params:xml:ns:rgp-1.0',
-        'id'    => 'id',
-        'schema'  => 'urn:ietf:params:xml:ns:rgp-1.0 rgp-1.0.xsd',
+        'xmlns' => 'urn:ietf:params:xml:ns:rgp-1.0',
+        'id' => 'id',
+        'schema' => 'urn:ietf:params:xml:ns:rgp-1.0 rgp-1.0.xsd',
       ),
     );
 
