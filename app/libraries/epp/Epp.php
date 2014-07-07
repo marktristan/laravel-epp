@@ -40,10 +40,16 @@ class Epp {
   public static function login()
   {
     $registry = Config::get('epp.registry');
+    $pwd = Config::get("epp.$registry.pw");
+    $password = Input::get('password');
+    if (isset($password))
+    {
+      $pwd = Input::get('password');
+    }
     
     $frame = new Login();
     Epp::setParam($frame, 'clID', Input::get('registrar'));
-    Epp::setParam($frame, 'pw', Config::get("epp.$registry.pw"));
+    Epp::setParam($frame, 'pw', $pwd);
     Epp::setParam($frame, 'eppVersion', Config::get('epp.version'));
     Epp::setParam($frame, 'eppLang', Config::get('epp.lang'));
     Epp::addElement($frame, 'objURI', ObjectSpec::xmlns('domain'), $frame->svcs);

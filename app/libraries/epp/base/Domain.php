@@ -157,5 +157,21 @@ class Domain {
     $frame->addObjectProperty('name', $data->handle);
     return $frame->saveXML();
   }
+
+  public static function transfer($data)
+  {
+    $frame = new EppCommand('transfer', 'domain');
+    $frame->command->setAttribute('op', $data->type);
+    $frame->addObjectProperty('name', $data->handle);
+    $frame->addObjectProperty('period', intval($data->period))->setAttribute('unit', 'y');
+
+    if (isset($data->authInfo))
+    {
+      $authInfoObj = $frame->addObjectProperty('authInfo');
+      $frame->addObjectProperty('pw', $data->authInfo, $authInfoObj);
+    }
+
+    return $frame->saveXML();
+  }
   
 }
