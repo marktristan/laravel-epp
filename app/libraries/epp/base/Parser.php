@@ -1,23 +1,23 @@
 <?php
 
 class Parser {
-  
+
   public static function pollReq($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->msgQ))
     {
       $result->data = new stdClass();
       $msgQ = $data->response->msgQ;
-      
+
       $result->data->count = $msgQ->_attribute['count'];
       $result->data->id = $msgQ->_attribute['id'];
       $result->data->qDate = $msgQ->qDate;
-      
+
       if (strpos($msgQ->msg->_content, '<![CDATA[') == 0)
       {
         $result->data->msg = Epp::unserialize($msgQ->msg->_content);
@@ -27,32 +27,32 @@ class Parser {
         $result->data->msg = $msgQ->msg->_content;
       }
     }
-    
+
     return $result;
   }
-  
+
   public static function pollAck($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     return $result;
   }
-  
+
   public static function domainCheck($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'domain:chkData'}->{'domain:cd'};
-      
+
       if (is_array($resData))
       {
         $resTmp = array();
@@ -63,7 +63,7 @@ class Parser {
             'avail' => $res->{'domain:name'}->_attribute['avail']
           );
         }
-        
+
         $result->data = $resTmp;
       }
       else
@@ -72,25 +72,25 @@ class Parser {
         $result->data->avail = $resData->{'domain:name'}->_attribute['avail'];
       }
     }
-    
+
     return $result;
   }
-  
+
   public static function domainInfo($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'domain:infData'};
-      
+
       $result->data->domain = $resData->{'domain:name'};
       $result->data->roid = $resData->{'domain:roid'};
-      
+
       $domainStatus = $resData->{'domain:status'};
       $status = array();
       if (is_array($domainStatus))
@@ -110,13 +110,13 @@ class Parser {
         {
           $content = $domainStatus->_attribute['s'];
         }
-        
+
         $status[$domainStatus->_attribute['s']] = $content;
       }
-      
+
       $result->data->status = $status;
       $result->data->registrant = $resData->{'domain:registrant'};
-      
+
       if (isset($resData->{'domain:contact'}))
       {
         $contacts = array();
@@ -131,41 +131,44 @@ class Parser {
         {
           $contacts[$resData->{'domain:contact'}->_attribute['type']] = $resData->{'domain:contact'}->_content;
         }
-        
+
         $result->data->contact = $contacts;
       }
-      
+
       if (isset($resData->{'domain:ns'}))
       {
         $result->data->ns = $resData->{'domain:ns'}->{'domain:hostObj'};
       }
-      
+
       if (isset($resData->{'domain:host'}))
       {
         $result->data->host = $resData->{'domain:host'};
       }
-      
+
       $result->data->clID = $resData->{'domain:clID'};
       $result->data->crID = $resData->{'domain:crID'};
       $result->data->crDate = $resData->{'domain:crDate'};
-      
+
       if (isset($resData->{'domain:upID'}))
       {
         $result->data->upID = $resData->{'domain:upID'};
         $result->data->upDate = $resData->{'domain:upDate'};
       }
-      
+
       $result->data->exDate = $resData->{'domain:exDate'};
-      
+
       if (isset($resData->{'domain:authInfo'}->{'domain:pw'}))
       {
         $result->data->authInfo = $resData->{'domain:authInfo'}->{'domain:pw'};
       }
       else
       {
-        $result->data->authInfo = $resData->{'domain:authInfo'};
+        if (isset($resData->{'domain:authInfo'}))
+        {
+          $result->data->authInfo = $resData->{'domain:authInfo'};
+        }
       }
-      
+
       if (isset($data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'}))
       {
         $rgpStatus = $data->response->extension->{'rgp:infData'}->{'rgp:rgpStatus'};
@@ -176,7 +179,7 @@ class Parser {
           {
             $stats[] = $rgpSt->_attribute['s'];
           }
-          
+
           $result->data->rgpStatus = $stats;
         }
         else
@@ -185,91 +188,91 @@ class Parser {
         }
       }
     }
-    
+
     return $result;
   }
-  
+
   public static function domainCreate($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'domain:creData'};
-      
+
       $result->data->name = $resData->{'domain:name'};
       $result->data->crDate = $resData->{'domain:crDate'};
       $result->data->exDate = $resData->{'domain:exDate'};
     }
-    
+
     return $result;
   }
-  
+
   public static function domainRenew($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'domain:renData'};
-      
+
       $result->data->name = $resData->{'domain:name'};
       $result->data->exDate = $resData->{'domain:exDate'};
     }
-    
+
     return $result;
   }
-  
+
   public static function domainUpdate($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     return $result;
   }
 
   public static function domainDelete($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     return $result;
   }
 
   public static function domainTransfer($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     return $result;
   }
-  
+
   public static function contactCheck($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'contact:chkData'}->{'contact:cd'};
-      
+
       if (is_array($resData))
       {
         $resTmp = array();
@@ -280,7 +283,7 @@ class Parser {
             'avail' => $res->{'contact:id'}->_attribute['avail']
           );
         }
-        
+
         $result->data = $resTmp;
       }
       else
@@ -289,25 +292,25 @@ class Parser {
         $result->data->avail = $resData->{'contact:id'}->_attribute['avail'];
       }
     }
-    
+
     return $result;
   }
-  
+
   public static function contactInfo($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'contact:infData'};
-      
+
       $result->data->id = $resData->{'contact:id'};
       $result->data->roid = $resData->{'contact:roid'};
-      
+
       $contactStatus = $resData->{'contact:status'};
       $status = array();
       if (is_array($contactStatus))
@@ -327,12 +330,12 @@ class Parser {
         {
           $content = $contactStatus->_attribute['s'];
         }
-        
+
         $status[$contactStatus->_attribute['s']] = $content;
       }
-      
+
       $result->data->status = $status;
-      
+
       $postalInfo = $resData->{'contact:postalInfo'};
       $address = array();
       if (is_array($postalInfo))
@@ -340,12 +343,12 @@ class Parser {
         foreach ($postalInfo as $pi)
         {
           $address[$pi->_attribute['type']]['name'] = $pi->{'contact:name'};
-          
+
           if (isset($pi->{'contact:org'}))
           {
             $address[$pi->_attribute['type']]['org'] = $pi->{'contact:org'};
           }
-          
+
           $street = $pi->{'contact:addr'}->{'contact:street'};
           $tmpStreet = array();
           if (is_array($street))
@@ -354,38 +357,38 @@ class Parser {
             {
               $tmpStreet['street'][] = $st;
             }
-            
+
             $address[$pi->_attribute['type']]['addr'] = $tmpStreet;
           }
           else
           {
             $address[$pi->_attribute['type']]['addr']['street'] = $street;
           }
-          
+
           $address[$pi->_attribute['type']]['addr']['city'] = $pi->{'contact:addr'}->{'contact:city'};
-          
+
           if (isset($pi->{'contact:addr'}->{'contact:sp'}))
           {
             $address[$pi->_attribute['type']]['addr']['sp'] = $pi->{'contact:addr'}->{'contact:sp'};
           }
-          
+
           if (isset($pi->{'contact:addr'}->{'contact:pc'}))
           {
             $address[$pi->_attribute['type']]['addr']['pc'] = $pi->{'contact:addr'}->{'contact:pc'};
           }
-          
+
           $address[$pi->_attribute['type']]['addr']['cc'] = $pi->{'contact:addr'}->{'contact:cc'};
         }
       }
       else
       {
         $address[$postalInfo->_attribute['type']]['name'] = $postalInfo->{'contact:name'};
-        
+
         if (isset($postalInfo->{'contact:org'}))
         {
           $address[$postalInfo->_attribute['type']]['org'] = $postalInfo->{'contact:org'};
         }
-        
+
         $street = $postalInfo->{'contact:addr'}->{'contact:street'};
         $tmpStreet = array();
         if (is_array($street))
@@ -394,82 +397,82 @@ class Parser {
           {
             $tmpStreet['street'][] = $st;
           }
-          
+
           $address[$postalInfo->_attribute['type']]['addr'] = $tmpStreet;
         }
         else
         {
           $address[$postalInfo->_attribute['type']]['addr']['street'] = $street;
         }
-        
+
         $address[$postalInfo->_attribute['type']]['addr']['city'] = $postalInfo->{'contact:addr'}->{'contact:city'};
-        
+
         if (isset($postalInfo->{'contact:addr'}->{'contact:sp'}))
         {
           $address[$postalInfo->_attribute['type']]['addr']['sp'] = $postalInfo->{'contact:addr'}->{'contact:sp'};
         }
-        
+
         if (isset($postalInfo->{'contact:addr'}->{'contact:pc'}))
         {
           $address[$postalInfo->_attribute['type']]['addr']['pc'] = $postalInfo->{'contact:addr'}->{'contact:pc'};
         }
-        
+
         $address[$postalInfo->_attribute['type']]['addr']['cc'] = $postalInfo->{'contact:addr'}->{'contact:cc'};
       }
-      
+
       $result->data->postalInfo = $address;
       $result->data->voice = $resData->{'contact:voice'}->_content;
-      
+
       if (isset($resData->{'contact:voice'}->_attribute['x']))
       {
         $result->data->ext = $resData->{'contact:voice'}->_attribute['x'];
       }
-      
+
       if (isset($resData->{'contact:fax'}))
       {
         $result->data->fax = $resData->{'contact:fax'};
       }
-      
+
       $result->data->email = $resData->{'contact:email'};
       $result->data->clID = $resData->{'contact:clID'};
       $result->data->crID = $resData->{'contact:crID'};
       $result->data->crDate = $resData->{'contact:crDate'};
-      
+
       if (isset($resData->{'contact:upID'}))
       {
         $result->data->upID = $resData->{'contact:upID'};
         $result->data->upDate = $resData->{'contact:upDate'};
       }
     }
-    
+
     return $result;
   }
-  
+
   public static function contactCreate($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     if (isset($data->response->resData))
     {
       $result->data = new stdClass();
       $resData = $data->response->resData->{'contact:creData'};
       $result->data->id = $resData->{'contact:id'};
     }
-    
+
     return $result;
   }
-  
+
   public static function contactUpdate($data)
   {
     $result = new stdClass();
-    
+
     $result->code = $data->response->result->_attribute['code'];
     $result->msg = $data->response->result->msg;
-    
+
     return $result;
   }
-  
+
 }
